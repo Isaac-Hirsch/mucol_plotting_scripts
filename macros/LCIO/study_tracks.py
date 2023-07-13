@@ -1,7 +1,7 @@
 from array import array
 import os
 from pyLCIO import IOIMPL, EVENT, UTIL
-from ROOT import TH1D, TH2D, TFile, TLorentzVector, TTree, TMath
+from ROOT import TH1D, TH2D, TFile, TLorentzVector, TTree, TMath,TCanvas
 from math import *
 from optparse import OptionParser
 
@@ -328,3 +328,15 @@ tree.Write()
 for histo in histos_list:
     histo.Write()
 output_file.Close()
+
+output_root = TFile(options.outFile+".root","RECREATE")
+for histo in histos_list:
+    histo.Write()
+output_root.Close()
+
+# save histograms as PNG files
+for histo in histos_list:
+    canvas = TCanvas(histo.GetName(), histo.GetTitle())
+    histo.Draw()
+    save_path = f"{histo.GetName()}.png"
+    canvas.SaveAs(save_path)
