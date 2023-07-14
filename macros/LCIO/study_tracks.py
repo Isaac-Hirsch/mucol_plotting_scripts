@@ -329,11 +329,6 @@ for histo in histos_list:
     histo.Write()
 output_file.Close()
 
-output_root = TFile(options.outFile+".root","RECREATE")
-for histo in histos_list:
-    histo.Write()
-output_root.Close()
-
 # save histograms as PNG files
 for histo in histos_list:
     canvas = TCanvas(histo.GetName(), histo.GetTitle())
